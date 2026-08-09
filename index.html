@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 支持添加到主屏幕，像APP一样打开 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>家乐价格表</title>
@@ -16,7 +15,6 @@
             min-height: 100vh;
         }
 
-        /* ========== 左侧分类导航（桌面端） ========== */
         .sidebar {
             width: 180px;
             background: #1e2a3a;
@@ -29,7 +27,6 @@
             left: 0;
             bottom: 0;
             z-index: 100;
-            transition: transform 0.3s;
         }
         .sidebar h2 {
             text-align: center;
@@ -57,7 +54,6 @@
             border-left-color: #ff6b6b;
         }
 
-        /* ========== 右侧内容区 ========== */
         .main-content {
             margin-left: 180px;
             flex: 1;
@@ -65,7 +61,6 @@
             width: 100%;
         }
 
-        /* 搜索框 */
         .search-box {
             margin-bottom: 25px;
             display: flex;
@@ -87,7 +82,6 @@
             border-color: #ff6b6b;
         }
 
-        /* 商品卡片网格 */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -145,7 +139,6 @@
             font-size: 1.4rem;
         }
 
-        /* 没有结果提示 */
         .no-result {
             grid-column: 1 / -1;
             text-align: center;
@@ -154,7 +147,6 @@
             padding: 60px 20px;
         }
 
-        /* ========== 移动端适配（屏幕小于768px） ========== */
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar {
@@ -195,7 +187,6 @@
 </head>
 <body>
 
-    <!-- 左侧分类导航 -->
     <nav class="sidebar">
         <h2>🏠 价格表</h2>
         <button class="category-btn active" data-category="all">全部</button>
@@ -203,37 +194,48 @@
         <button class="category-btn" data-category="零食">🍪 零食</button>
         <button class="category-btn" data-category="泡面">🍜 泡面</button>
         <button class="category-btn" data-category="饮料">🥤 饮料</button>
+        <button class="category-btn" data-category="酒">🍷 酒</button>
         <button class="category-btn" data-category="其他">📦 其他</button>
     </nav>
 
-    <!-- 右侧主内容 -->
     <div class="main-content">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 搜商品名，例如“可乐”">
+            <input type="text" id="searchInput" placeholder="🔍 搜名称、价格或规格">
         </div>
         <div class="product-grid" id="productGrid"></div>
     </div>
 
     <script>
         // ==============================================================
-        // 📌 在这里修改商品：增、删、改价格、改图片
-        // 每个商品对象：
-        //   category: 分类（烟/零食/泡面/饮料/其他）
-        //   name: 商品名称
-        //   desc: 规格/说明
-        //   price: 价格（数字）
-        //   img: 图片地址，没有就留空 ''
+        // 📌 商品数据，可按需增删改
+        // 新增：今麦郎绿茶、冰红茶、阿萨姆奶茶、劲仔拉丝爽
         // ==============================================================
         const products = [
             // 烟
-            { category: '烟', name: '中华（软）', desc: '软盒', price: 70, img: '' },
-            { category: '烟', name: '黄鹤楼（软蓝）', desc: '软盒', price: 20, img: '' },
-            { category: '烟', name: '利群（新版）', desc: '硬盒', price: 16, img: '' },
-            { category: '烟', name: '南京（炫赫门）', desc: '细支', price: 18, img: '' },
+            { category: '烟', name: '徽商', desc: '', price: 45, img: '' },
+            { category: '烟', name: '盛京', desc: '', price: 20, img: '' },
+            { category: '烟', name: '软中华', desc: '', price: 60, img: '' },
+            { category: '烟', name: '硬中华', desc: '', price: 45, img: '' },
+            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: '' },
+            { category: '烟', name: '红方印', desc: '', price: 16, img: '' },
+            { category: '烟', name: '苏烟', desc: '', price: 22, img: '' },
+            { category: '烟', name: '玉溪', desc: '', price: 22, img: '' },
+            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: '' },
+            { category: '烟', name: '金皖', desc: '', price: 27, img: '' },
+            { category: '烟', name: '黄金叶', desc: '', price: 20, img: '' },
+            { category: '烟', name: '细云烟', desc: '', price: 15, img: '' },
+            { category: '烟', name: '大黄山', desc: '', price: 16, img: '' },
+            { category: '烟', name: '云烟', desc: '', price: 13, img: '' },
+            { category: '烟', name: '黄山', desc: '', price: 8, img: '' },
+            { category: '烟', name: '黄皖', desc: '', price: 15, img: '' },
+            { category: '烟', name: '红皖', desc: '', price: 19, img: '' },
+            { category: '烟', name: '细黄金叶', desc: '', price: 18, img: '' },
+            { category: '烟', name: '蓝利群', desc: '', price: 18, img: '' },
             // 零食
             { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: '' },
             { category: '零食', name: '辣条', desc: '小包', price: 2, img: '' },
             { category: '零食', name: '瓜子', desc: '五香 200g', price: 6, img: '' },
+            { category: '零食', name: '劲仔拉丝爽', desc: '', price: 1, img: '' },
             // 泡面
             { category: '泡面', name: '康师傅红烧牛肉面', desc: '桶装', price: 5, img: '' },
             { category: '泡面', name: '统一老坛酸菜面', desc: '袋装', price: 3, img: '' },
@@ -242,6 +244,9 @@
             { category: '饮料', name: '可口可乐', desc: '2L 瓶装', price: 7, img: '' },
             { category: '饮料', name: '农夫山泉', desc: '550ml', price: 2, img: '' },
             { category: '饮料', name: '元气森林', desc: '白桃味 480ml', price: 5, img: '' },
+            { category: '饮料', name: '今麦郎绿茶', desc: '', price: 3, img: '' },
+            { category: '饮料', name: '冰红茶', desc: '', price: 3, img: '' },
+            { category: '饮料', name: '阿萨姆奶茶', desc: '', price: 4, img: '' },
             // 其他
             { category: '其他', name: '打火机', desc: '普通款', price: 2, img: '' },
             { category: '其他', name: '纸巾', desc: '小包', price: 1, img: '' },
@@ -255,20 +260,20 @@
         const searchInput = document.getElementById('searchInput');
         const categoryBtns = document.querySelectorAll('.category-btn');
 
-        // 渲染商品卡片
         function render() {
             let filtered = products;
 
-            // 按分类过滤
             if (currentCategory !== 'all') {
                 filtered = filtered.filter(p => p.category === currentCategory);
             }
-            // 模糊搜索：名称或描述包含关键字（不区分大小写）
             if (keyword.trim() !== '') {
                 const kw = keyword.trim().toLowerCase();
-                filtered = filtered.filter(p =>
-                    p.name.toLowerCase().includes(kw) || p.desc.toLowerCase().includes(kw)
-                );
+                filtered = filtered.filter(p => {
+                    // 支持名称、描述、以及价格（精确数字）搜索
+                    return p.name.toLowerCase().includes(kw) ||
+                           p.desc.toLowerCase().includes(kw) ||
+                           p.price.toString() === kw;
+                });
             }
 
             productGrid.innerHTML = '';
@@ -290,7 +295,6 @@
             });
         }
 
-        // 分类点击事件
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 categoryBtns.forEach(b => b.classList.remove('active'));
@@ -300,13 +304,11 @@
             });
         });
 
-        // 搜索输入
         searchInput.addEventListener('input', (e) => {
             keyword = e.target.value;
             render();
         });
 
-        // 初始渲染
         render();
     </script>
 </body>
