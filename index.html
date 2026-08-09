@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 支持添加到主屏幕，像APP一样打开 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>家乐价格表</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ========== 左侧分类导航（桌面端） ========== */
+        .sidebar {
+            width: 180px;
+            background: #1e2a3a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+        .sidebar h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+        }
+        .sidebar .category-btn {
+            background: transparent;
+            border: none;
+            color: #b0bec5;
+            font-size: 1.3rem;
+            padding: 15px 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+            border-left: 4px solid transparent;
+        }
+        .sidebar .category-btn:hover,
+        .sidebar .category-btn.active {
+            background: #2c3e50;
+            color: #ff6b6b;
+            border-left-color: #ff6b6b;
+        }
+
+        /* ========== 右侧内容区 ========== */
+        .main-content {
+            margin-left: 180px;
+            flex: 1;
+            padding: 20px;
+            width: 100%;
+        }
+
+        /* 搜索框 */
+        .search-box {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-box input {
+            width: 100%;
+            max-width: 500px;
+            font-size: 1.6rem;
+            padding: 14px 20px;
+            border: 2px solid #ddd;
+            border-radius: 40px;
+            outline: none;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: border 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #ff6b6b;
+        }
+
+        /* 商品卡片网格 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f9f9f9;
+            border-bottom: 2px solid #eee;
+        }
+        .product-card .no-img {
+            width: 100%;
+            height: 200px;
+            background: #eceff1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+        .product-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin: 10px 10px 5px;
+            color: #333;
+        }
+        .product-desc {
+            font-size: 1.2rem;
+            color: #777;
+            margin-bottom: 8px;
+        }
+        .product-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e63946;
+            margin: 5px 0;
+        }
+        .product-price::before {
+            content: '¥';
+            font-size: 1.4rem;
+        }
+
+        /* 没有结果提示 */
+        .no-result {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.8rem;
+            color: #999;
+            padding: 60px 20px;
+        }
+
+        /* ========== 移动端适配（屏幕小于768px） ========== */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar {
+                position: static;
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px 5px;
+                background: #1e2a3a;
+                white-space: nowrap;
+            }
+            .sidebar h2 { display: none; }
+            .sidebar .category-btn {
+                display: inline-block;
+                padding: 10px 16px;
+                font-size: 1.2rem;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .sidebar .category-btn.active {
+                border-bottom-color: #ff6b6b;
+                border-left-color: transparent;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            .product-card img, .product-card .no-img {
+                height: 160px;
+            }
+            .product-name { font-size: 1.4rem; }
+            .product-price { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左侧分类导航 -->
+    <nav class="sidebar">
+        <h2>🏠 价格表</h2>
+        <button class="category-btn active" data-category="all">全部</button>
+        <button class="category-btn" data-category="烟">🚬 烟</button>
+        <button class="category-btn" data-category="零食">🍪 零食</button>
+        <button class="category-btn" data-category="泡面">🍜 泡面</button>
+        <button class="category-btn" data-category="饮料">🥤 饮料</button>
+        <button class="category-btn" data-category="其他">📦 其他</button>
+    </nav>
+
+    <!-- 右侧主内容 -->
+    <div class="main-content">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 搜商品名，例如“可乐”">
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <script>
+        // ==============================================================
+        // 📌 在这里修改商品：增、删、改价格、改图片
+        // 每个商品对象：
+        //   category: 分类（烟/零食/泡面/饮料/其他）
+        //   name: 商品名称
+        //   desc: 规格/说明
+        //   price: 价格（数字）
+        //   img: 图片地址，没有就留空 ''
+        // ==============================================================
+        const products = [
+            // 烟
+            { category: '烟', name: '中华（软）', desc: '软盒', price: 70, img: '' },
+            { category: '烟', name: '黄鹤楼（软蓝）', desc: '软盒', price: 20, img: '' },
+            { category: '烟', name: '利群（新版）', desc: '硬盒', price: 16, img: '' },
+            { category: '烟', name: '南京（炫赫门）', desc: '细支', price: 18, img: '' },
+            // 零食
+            { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: '' },
+            { category: '零食', name: '辣条', desc: '小包', price: 2, img: '' },
+            { category: '零食', name: '瓜子', desc: '五香 200g', price: 6, img: '' },
+            // 泡面
+            { category: '泡面', name: '康师傅红烧牛肉面', desc: '桶装', price: 5, img: '' },
+            { category: '泡面', name: '统一老坛酸菜面', desc: '袋装', price: 3, img: '' },
+            { category: '泡面', name: '汤达人', desc: '日式豚骨', price: 8, img: '' },
+            // 饮料
+            { category: '饮料', name: '可口可乐', desc: '2L 瓶装', price: 7, img: '' },
+            { category: '饮料', name: '农夫山泉', desc: '550ml', price: 2, img: '' },
+            { category: '饮料', name: '元气森林', desc: '白桃味 480ml', price: 5, img: '' },
+            // 其他
+            { category: '其他', name: '打火机', desc: '普通款', price: 2, img: '' },
+            { category: '其他', name: '纸巾', desc: '小包', price: 1, img: '' },
+            { category: '其他', name: '扑克牌', desc: '姚记', price: 3, img: '' },
+        ];
+
+        let currentCategory = 'all';
+        let keyword = '';
+
+        const productGrid = document.getElementById('productGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        // 渲染商品卡片
+        function render() {
+            let filtered = products;
+
+            // 按分类过滤
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+            // 模糊搜索：名称或描述包含关键字（不区分大小写）
+            if (keyword.trim() !== '') {
+                const kw = keyword.trim().toLowerCase();
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(kw) || p.desc.toLowerCase().includes(kw)
+                );
+            }
+
+            productGrid.innerHTML = '';
+            if (filtered.length === 0) {
+                productGrid.innerHTML = '<div class="no-result">😕 没找到相关商品</div>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : '<div class="no-img">暂无图片</div>'}
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-desc">${p.desc}</div>
+                    <div class="product-price">${p.price}</div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+
+        // 分类点击事件
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                render();
+            });
+        });
+
+        // 搜索输入
+        searchInput.addEventListener('input', (e) => {
+            keyword = e.target.value;
+            render();
+        });
+
+        // 初始渲染
+        render();
+    </script>
+</body>
+</html>
