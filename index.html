@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>家乐价格表</title>
+    <title>价格表</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -207,53 +207,53 @@
 
     <script>
         // ==============================================================
-        // 📌 商品数据，可按需增删改
-        // 分类：烟、酒、零食、泡面、饮料、其他
+        // 📌 商品数据 - 图片请放在仓库根目录，名称与此处 img 字段一致
+        // 示例：你的仓库里有 huishang.jpg，这里就写 'huishang.jpg'
         // ==============================================================
         const products = [
             // 烟
             { category: '烟', name: '徽商', desc: '', price: 45, img: 'huishang.jpg' },
-            { category: '烟', name: '盛京', desc: '', price: 20, img: '' },
-            { category: '烟', name: '软中华', desc: '', price: 60, img: '' },
-            { category: '烟', name: '硬中华', desc: '', price: 45, img: '' },
-            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: 'heihuangsdaibaozu.jpg' },
-            { category: '烟', name: '红方印', desc: '', price: 16, img: '' },
-            { category: '烟', name: '苏烟', desc: '', price: 22, img: '' },
-            { category: '烟', name: '玉溪', desc: '', price: 22, img: '' },
-            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: 'https://cdn.jsdelivr.net/gh/qwerty458xjds/price/@main/heihuangsdaibaozu.jpg' },
-            { category: '烟', name: '金皖', desc: '', price: 27, img: '' },
-            { category: '烟', name: '黄金叶', desc: '', price: 20, img: '' },
-            { category: '烟', name: '细云烟', desc: '', price: 15, img: '' },
-            { category: '烟', name: '大黄山', desc: '', price: 16, img: '' },
-            { category: '烟', name: '云烟', desc: '', price: 13, img: '' },
-            { category: '烟', name: '黄山', desc: '', price: 8, img: '' },
-            { category: '烟', name: '黄皖', desc: '', price: 15, img: '' },
-            { category: '烟', name: '红皖', desc: '', price: 19, img: '' },
-            { category: '烟', name: '细黄金叶', desc: '', price: 18, img: '' },
-            { category: '烟', name: '蓝利群', desc: '', price: 18, img: '' },
-            // 酒（示例，可按需修改）
-            { category: '酒', name: '青岛啤酒', desc: '330ml*6', price: 18, img: '' },
-            { category: '酒', name: '二锅头', desc: '500ml', price: 15, img: '' },
+            { category: '烟', name: '盛京', desc: '', price: 20, img: 'shengjing.jpg' },
+            { category: '烟', name: '软中华', desc: '', price: 60, img: 'ruanzhonghua.jpg' },
+            { category: '烟', name: '硬中华', desc: '', price: 45, img: 'yingzhonghua.jpg' },
+            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: 'furongwang.jpg' },
+            { category: '烟', name: '红方印', desc: '', price: 16, img: 'hongfangyin.jpg' },
+            { category: '烟', name: '苏烟', desc: '', price: 22, img: 'suyan.jpg' },
+            { category: '烟', name: '玉溪', desc: '', price: 22, img: 'yuxi.jpg' },
+            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: 'heihuangshan.jpg' },
+            { category: '烟', name: '金皖', desc: '', price: 27, img: 'jinwan.jpg' },
+            { category: '烟', name: '黄金叶', desc: '', price: 20, img: 'huangjinye.jpg' },
+            { category: '烟', name: '细云烟', desc: '', price: 15, img: 'xiyunyan.jpg' },
+            { category: '烟', name: '大黄山', desc: '', price: 16, img: 'dahuangshan.jpg' },
+            { category: '烟', name: '云烟', desc: '', price: 13, img: 'yunyan.jpg' },
+            { category: '烟', name: '黄山', desc: '', price: 8, img: 'huangshan.jpg' },
+            { category: '烟', name: '黄皖', desc: '', price: 15, img: 'huangwan.jpg' },
+            { category: '烟', name: '红皖', desc: '', price: 19, img: 'hongwan.jpg' },
+            { category: '烟', name: '细黄金叶', desc: '', price: 18, img: 'xihuangjinye.jpg' },
+            { category: '烟', name: '蓝利群', desc: '', price: 18, img: 'lanliqun.jpg' },
+            // 酒
+            { category: '酒', name: '青岛啤酒', desc: '330ml*6', price: 18, img: 'qingdaopijiu.jpg' },
+            { category: '酒', name: '二锅头', desc: '500ml', price: 15, img: 'erguotou.jpg' },
             // 零食
-            { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: '' },
-            { category: '零食', name: '辣条', desc: '小包', price: 2, img: '' },
-            { category: '零食', name: '瓜子', desc: '五香 200g', price: 6, img: '' },
-            { category: '零食', name: '劲仔拉丝爽', desc: '', price: 1, img: '' },
+            { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: 'shupian.jpg' },
+            { category: '零食', name: '辣条', desc: '小包', price: 2, img: 'latiao.jpg' },
+            { category: '零食', name: '瓜子', desc: '五香 200g', price: 6, img: 'guazi.jpg' },
+            { category: '零食', name: '劲仔拉丝爽', desc: '', price: 1, img: 'jinzailasishuang.jpg' },
             // 泡面
-            { category: '泡面', name: '康师傅红烧牛肉面', desc: '桶装', price: 5, img: '' },
-            { category: '泡面', name: '统一老坛酸菜面', desc: '袋装', price: 3, img: '' },
-            { category: '泡面', name: '汤达人', desc: '日式豚骨', price: 8, img: '' },
+            { category: '泡面', name: '康师傅红烧牛肉面', desc: '桶装', price: 5, img: 'kangshifu.jpg' },
+            { category: '泡面', name: '统一老坛酸菜面', desc: '袋装', price: 3, img: 'tongyi.jpg' },
+            { category: '泡面', name: '汤达人', desc: '日式豚骨', price: 8, img: 'tangdaren.jpg' },
             // 饮料
-            { category: '饮料', name: '可口可乐', desc: '2L 瓶装', price: 7, img: '' },
-            { category: '饮料', name: '农夫山泉', desc: '550ml', price: 2, img: '' },
-            { category: '饮料', name: '元气森林', desc: '白桃味 480ml', price: 5, img: '' },
-            { category: '饮料', name: '今麦郎绿茶', desc: '', price: 3, img: '' },
-            { category: '饮料', name: '冰红茶', desc: '', price: 3, img: '' },
-            { category: '饮料', name: '阿萨姆奶茶', desc: '', price: 4, img: '' },
+            { category: '饮料', name: '可口可乐', desc: '2L 瓶装', price: 7, img: 'cola.jpg' },
+            { category: '饮料', name: '农夫山泉', desc: '550ml', price: 2, img: 'nongfu.jpg' },
+            { category: '饮料', name: '元气森林', desc: '白桃味 480ml', price: 5, img: 'yuanqi.jpg' },
+            { category: '饮料', name: '今麦郎绿茶', desc: '', price: 3, img: 'jinmailang.jpg' },
+            { category: '饮料', name: '冰红茶', desc: '', price: 3, img: 'binghongcha.jpg' },
+            { category: '饮料', name: '阿萨姆奶茶', desc: '', price: 4, img: 'asamu.jpg' },
             // 其他
-            { category: '其他', name: '打火机', desc: '普通款', price: 2, img: '' },
-            { category: '其他', name: '纸巾', desc: '小包', price: 1, img: '' },
-            { category: '其他', name: '扑克牌', desc: '姚记', price: 3, img: '' },
+            { category: '其他', name: '打火机', desc: '普通款', price: 2, img: 'huoji.jpg' },
+            { category: '其他', name: '纸巾', desc: '小包', price: 1, img: 'zhijin.jpg' },
+            { category: '其他', name: '扑克牌', desc: '姚记', price: 3, img: 'puke.jpg' },
         ];
 
         let currentCategory = 'all';
@@ -287,12 +287,22 @@
             filtered.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.innerHTML = `
-                    ${p.img ? `< img src="${p.img}" alt="${p.name}" loading="lazy" crossorigin="anonymous">` : '<div class="no-img">暂无图片</div>'}
-                    <div class="product-name">${p.name}</div>
-                    <div class="product-desc">${p.desc}</div>
-                    <div class="product-price">${p.price}</div>
-                `;
+                // 关键：直接用文件名，会自动请求同目录下的图片
+                if (p.img) {
+                    card.innerHTML = `
+                        <img src="${p.img}" alt="${p.name}" loading="lazy">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="product-price">${p.price}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="no-img">暂无图片</div>
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="product-price">${p.price}</div>
+                    `;
+                }
                 productGrid.appendChild(card);
             });
         }
