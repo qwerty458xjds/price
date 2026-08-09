@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>家乐价格表</title>
+    <title>韦楼超市价格表</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -103,8 +103,8 @@
         .product-card img {
             width: 100%;
             height: 200px;
-            object-fit: contain;      /* 图片完整显示不裁剪 */
-            background: #f5f5f5;      /* 空白区域底色 */
+            object-fit: contain;
+            background: #f5f5f5;
             border-bottom: 2px solid #eee;
         }
         .product-card .no-img {
@@ -147,7 +147,6 @@
             padding: 60px 20px;
         }
 
-        /* 手机适配 */
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar {
@@ -180,7 +179,7 @@
             }
             .product-card img, .product-card .no-img {
                 height: 160px;
-                object-fit: contain;   /* 手机端同样完整显示 */
+                object-fit: contain;
             }
             .product-name { font-size: 1.4rem; }
             .product-price { font-size: 1.8rem; }
@@ -190,14 +189,15 @@
 <body>
 
     <nav class="sidebar">
-        <h2>🏠 价格表</h2>
+        <h2>🏠 韦楼超市价格表</h2>
         <button class="category-btn active" data-category="all">全部</button>
         <button class="category-btn" data-category="烟">🚬 烟</button>
         <button class="category-btn" data-category="酒">🍷 酒</button>
         <button class="category-btn" data-category="零食">🍪 零食</button>
-        <button class="category-btn" data-category="泡面">🍜 泡面</button>
+        <button class="category-btn" data-category="食品">🍜 食品</button>
         <button class="category-btn" data-category="饮料">🥤 饮料</button>
         <button class="category-btn" data-category="其他">📦 其他</button>
+        <button class="category-btn" data-category="调料">🧂 调料</button>
     </nav>
 
     <div class="main-content">
@@ -208,55 +208,88 @@
     </div>
 
     <script>
-        // ==============================================================
-        // 📌 商品数据 – 图片请上传到仓库根目录，文件名与此处 img 字段一致
-        // 例如仓库里有 huishang.jpg，就写 'huishang.jpg'
-        // 没有图片的请留空 ''
-        // ==============================================================
         const products = [
             // 烟
-            { category: '烟', name: '徽商', desc: '', price: 45, img: 'huishang.jpg' },
-            { category: '烟', name: '盛京', desc: '', price: 20, img: 'shengjing.jpg' },
-            { category: '烟', name: '软中华', desc: '', price: 60, img: 'ruanzhonghua.jpg' },
-            { category: '烟', name: '硬中华', desc: '', price: 45, img: 'yingzhonghua.jpg' },
-            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: 'furongwang.jpg' },
-            { category: '烟', name: '红方印', desc: '', price: 16, img: 'hongfangyin.jpg' },
-            { category: '烟', name: '苏烟', desc: '', price: 22, img: 'suyan.jpg' },
-            { category: '烟', name: '玉溪', desc: '', price: 22, img: 'yuxi.jpg' },
-            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: 'heihuangsdaibaozu.jpg' },
-            { category: '烟', name: '金皖', desc: '', price: 27, img: 'jinwan.jpg' },
-            { category: '烟', name: '黄金叶', desc: '', price: 20, img: 'huangjinye.jpg' },
-            { category: '烟', name: '细云烟', desc: '', price: 15, img: 'xiyunyan.jpg' },
-            { category: '烟', name: '大黄山', desc: '', price: 16, img: 'daahuangsan.jpg' },
-            { category: '烟', name: '云烟', desc: '', price: 13, img: 'yunyan.jpg' },
-            { category: '烟', name: '黄山', desc: '', price: 8, img: 'huangsan.jpg' },
-            { category: '烟', name: '黄皖', desc: '', price: 15, img: 'huangwan.jpg' },
-            { category: '烟', name: '红皖', desc: '', price: 19, img: 'hongwan.jpg' },
-            { category: '烟', name: '细黄金叶', desc: '', price: 18, img: 'xihuangjinye.jpg' },
-            { category: '烟', name: '蓝利群', desc: '', price: 18, img: 'lanliqun.jpg' },
+            { category: '烟', name: '软中华', desc: '', price: 70, img: 'ruanzhonghua.jpg' },
+            { category: '烟', name: '红方印', desc: '', price: 20, img: 'hongfangyin.jpg' },
+            { category: '烟', name: '刘三姐', desc: '', price: 20, img: 'liusanjie.jpg' },
+            { category: '烟', name: '白沙', desc: '', price: 11, img: 'baisha.jpg' },
+            { category: '烟', name: '大前门', desc: '', price: 10, img: 'daqianmen.jpg' },
+            { category: '烟', name: '细徽商', desc: '', price: 45, img: 'xihuishang.jpg' },
+            { category: '烟', name: '白黄山', desc: '', price: 8, img: 'baihuangshan.jpg' },
+            { category: '烟', name: '天子', desc: '', price: 20, img: 'tianzi.jpg' },
+            { category: '烟', name: '好猫', desc: '', price: 16, img: 'haomao.jpg' },
+            { category: '烟', name: '长丰', desc: '', price: 7, img: 'changfeng.jpg' },
+            { category: '烟', name: '滕王阁', desc: '', price: 15, img: 'tengwangge.jpg' },
+            { category: '烟', name: '迎客松', desc: '', price: 22, img: 'yingkesong.jpg' },
+            { category: '烟', name: '细黄山', desc: '', price: 15, img: 'xihuangshan.jpg' },
+            { category: '烟', name: '南京', desc: '', price: 20, img: 'nanjing.jpg' },
+            { category: '烟', name: '黄鹤楼', desc: '', price: 30, img: 'huanghelou.jpg' },
+            { category: '烟', name: '乐途黄金叶', desc: '', price: 25, img: 'letuhuangjinye.jpg' },
+            { category: '烟', name: '牡丹', desc: '', price: 15, img: 'mudan.jpg' },
+            { category: '烟', name: '双喜', desc: '', price: 15, img: 'shuangxi.jpg' },
             // 酒
-            { category: '酒', name: '青岛啤酒', desc: '330ml*6', price: 18, img: 'qingdaopijiu.jpg' },
-            { category: '酒', name: '二锅头', desc: '500ml', price: 15, img: 'erguotou.jpg' },
+            { category: '酒', name: '小瓶天华尖', desc: '', price: 5, img: 'tianhuajian.jpg' },
             // 零食
-            { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: 'shupian.jpg' },
-            { category: '零食', name: '辣条', desc: '小包', price: 2, img: 'latiao.jpg' },
-            { category: '零食', name: '瓜子', desc: '五香 200g', price: 6, img: 'guazi.jpg' },
-            { category: '零食', name: '劲仔拉丝爽', desc: '', price: 1, img: 'jinzailasishuang.jpg' },
-            // 泡面
-            { category: '泡面', name: '康师傅红烧牛肉面', desc: '桶装', price: 5, img: 'kangshifu.jpg' },
-            { category: '泡面', name: '统一老坛酸菜面', desc: '袋装', price: 3, img: 'tongyi.jpg' },
-            { category: '泡面', name: '汤达人', desc: '日式豚骨', price: 8, img: 'tangdaren.jpg' },
+            { category: '零食', name: '干脆面', desc: '', price: 1, img: 'gancuimian.jpg' },
+            { category: '零食', name: '小袋毛肚', desc: '', price: 1, img: 'maodu.jpg' },
+            { category: '零食', name: '拉丝爽', desc: '', price: 1, img: 'lasishuang.jpg' },
+            { category: '零食', name: '大袋辣条', desc: '', price: 2, img: 'latiao.jpg' },
+            { category: '零食', name: '火腿肠', desc: '', price: 2, img: 'huotuichang.jpg' },
+            { category: '零食', name: '小面包', desc: '', price: 2, img: 'xiaomianbao.jpg' },
+            { category: '零食', name: '大面包', desc: '', price: 3, img: 'damianbao.jpg' },
+            { category: '零食', name: '上好佳鲜虾片', desc: '', price: 4, img: 'xianxiapian.jpg' },
+            { category: '零食', name: '呀土豆', desc: '', price: 4, img: 'yatudou.jpg' },
+            { category: '零食', name: '上好佳薯片袋装', desc: '', price: 4, img: 'shanghaojia.jpg' },
+            { category: '零食', name: '乐事薯片袋装', desc: '', price: 4, img: 'leshishupian.jpg' },
+            { category: '零食', name: '乐事薯片罐装', desc: '', price: 8, img: 'leshiguantou.jpg' },
+            { category: '零食', name: '博士牛筋', desc: '', price: 0.5, img: 'boshiniujin.jpg' },
+            { category: '零食', name: '鸡爪', desc: '', price: 2, img: 'jizhua.jpg' },
+            // 食品
+            { category: '食品', name: '康师傅泡面', desc: '', price: 5, img: 'kangshifu.jpg' },
+            { category: '食品', name: '面条', desc: '', price: 3, img: 'miantiao.jpg' },
+            { category: '食品', name: '鸡蛋一板', desc: '', price: 18, img: 'jidan.jpg' },
             // 饮料
-            { category: '饮料', name: '可口可乐', desc: '2L 瓶装', price: 7, img: 'cola.jpg' },
-            { category: '饮料', name: '农夫山泉', desc: '550ml', price: 2, img: 'nongfu.jpg' },
-            { category: '饮料', name: '元气森林', desc: '白桃味 480ml', price: 5, img: 'yuanqi.jpg' },
-            { category: '饮料', name: '今麦郎绿茶', desc: '', price: 3, img: 'jinmailang.jpg' },
+            { category: '饮料', name: '大瓶绿茶', desc: '', price: 5, img: 'dapinglvcha.jpg' },
+            { category: '饮料', name: '大瓶冰红茶', desc: '', price: 5, img: 'dapingbinghongcha.jpg' },
+            { category: '饮料', name: '大瓶冰糖雪梨', desc: '', price: 5, img: 'bingtangxueli.jpg' },
+            { category: '饮料', name: '大瓶可乐', desc: '', price: 7, img: 'dapingcola.jpg' },
+            { category: '饮料', name: '大瓶雪碧', desc: '', price: 7, img: 'dapingxuebi.jpg' },
+            { category: '饮料', name: '大瓶果粒橙', desc: '', price: 8, img: 'guolicheng.jpg' },
+            { category: '饮料', name: '百事可乐', desc: '', price: 3, img: 'baishicola.jpg' },
+            { category: '饮料', name: '可口可乐', desc: '', price: 3, img: 'cola.jpg' },
             { category: '饮料', name: '冰红茶', desc: '', price: 3, img: 'binghongcha.jpg' },
-            { category: '饮料', name: '阿萨姆奶茶', desc: '', price: 4, img: 'asamu.jpg' },
+            { category: '饮料', name: '绿茶', desc: '', price: 3, img: 'lvcha.jpg' },
+            { category: '饮料', name: '雪碧', desc: '', price: 3, img: 'xuebi.jpg' },
+            { category: '饮料', name: '红牛', desc: '', price: 6, img: 'hongniu.jpg' },
+            { category: '饮料', name: '娃哈哈矿泉水', desc: '', price: 2, img: 'wahaha.jpg' },
+            { category: '饮料', name: '东鹏特饮', desc: '', price: 5, img: 'dongpeng.jpg' },
+            { category: '饮料', name: '罐装啤酒', desc: '', price: 3, img: 'guanzhuangpijiu.jpg' },
+            { category: '饮料', name: '名趣苏打水', desc: '', price: 2, img: 'mingqu.jpg' },
+            { category: '饮料', name: '凉白开', desc: '', price: 2, img: 'liangbaikai.jpg' },
+            { category: '饮料', name: '农夫山泉', desc: '', price: 2, img: 'nongfu.jpg' },
+            { category: '饮料', name: '今麦郎苏打水', desc: '', price: 3, img: 'jinmailangsuda.jpg' },
+            { category: '饮料', name: '脉动', desc: '', price: 5, img: 'maidong.jpg' },
             // 其他
-            { category: '其他', name: '打火机', desc: '普通款', price: 2, img: 'huoji.jpg' },
-            { category: '其他', name: '纸巾', desc: '小包', price: 1, img: 'zhijin.jpg' },
-            { category: '其他', name: '扑克牌', desc: '姚记', price: 3, img: 'puke.jpg' },
+            { category: '其他', name: '一次性杯子', desc: '', price: 5, img: 'beizi.jpg' },
+            { category: '其他', name: '普通打火机', desc: '', price: 1, img: 'putonghuoji.jpg' },
+            { category: '其他', name: '防风打火机', desc: '', price: 2, img: 'fangfenghuoji.jpg' },
+            { category: '其他', name: '卫生纸', desc: '', price: 2, img: 'weishengzhi.jpg' },
+            { category: '其他', name: '杀虫剂', desc: '', price: 15, img: 'shachongji.jpg' },
+            { category: '其他', name: '蚊香', desc: '', price: 10, img: 'wenxiang.jpg' },
+            { category: '其他', name: '好来牙膏', desc: '', price: 8, img: 'haolai.jpg' },
+            { category: '其他', name: '云南白药牙膏', desc: '', price: 15, img: 'yunnanbaiyao.jpg' },
+            { category: '其他', name: '花露水', desc: '', price: 10, img: 'hualushui.jpg' },
+            { category: '其他', name: '灯', desc: '', price: 10, img: 'deng.jpg' },
+            { category: '其他', name: '洗洁精', desc: '', price: 10, img: 'xijiejing.jpg' },
+            { category: '其他', name: '插头', desc: '', price: 4, img: 'chatou.jpg' },
+            { category: '其他', name: '电池', desc: '', price: 2, img: 'dianchi.jpg' },
+            { category: '其他', name: '牙刷', desc: '', price: 5, img: 'yashua.jpg' },
+            { category: '其他', name: '扑克', desc: '', price: 2, img: 'puke.jpg' },
+            { category: '其他', name: '伞', desc: '', price: 17, img: 'san.jpg' },
+            { category: '其他', name: '洗衣粉', desc: '', price: 10, img: 'xiyifen.jpg' },
+            // 调料
+            { category: '调料', name: '酱油', desc: '', price: 5, img: 'jiangyou.jpg' },
         ];
 
         let currentCategory = 'all';
