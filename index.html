@@ -191,10 +191,10 @@
         <h2>🏠 价格表</h2>
         <button class="category-btn active" data-category="all">全部</button>
         <button class="category-btn" data-category="烟">🚬 烟</button>
+        <button class="category-btn" data-category="酒">🍷 酒</button>
         <button class="category-btn" data-category="零食">🍪 零食</button>
         <button class="category-btn" data-category="泡面">🍜 泡面</button>
         <button class="category-btn" data-category="饮料">🥤 饮料</button>
-        <button class="category-btn" data-category="酒">🍷 酒</button>
         <button class="category-btn" data-category="其他">📦 其他</button>
     </nav>
 
@@ -208,7 +208,7 @@
     <script>
         // ==============================================================
         // 📌 商品数据，可按需增删改
-        // 新增：今麦郎绿茶、冰红茶、阿萨姆奶茶、劲仔拉丝爽
+        // 分类：烟、酒、零食、泡面、饮料、其他
         // ==============================================================
         const products = [
             // 烟
@@ -216,11 +216,11 @@
             { category: '烟', name: '盛京', desc: '', price: 20, img: '' },
             { category: '烟', name: '软中华', desc: '', price: 60, img: '' },
             { category: '烟', name: '硬中华', desc: '', price: 45, img: '' },
-            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: 'https://github.com/qwerty458xjds/price/blob/main/furongwang.jpg?raw=true' },
+            { category: '烟', name: '芙蓉王', desc: '', price: 25, img: '' },
             { category: '烟', name: '红方印', desc: '', price: 16, img: '' },
             { category: '烟', name: '苏烟', desc: '', price: 22, img: '' },
             { category: '烟', name: '玉溪', desc: '', price: 22, img: '' },
-            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: 'https://github.com/qwerty458xjds/price/blob/main/heihuangsdaibaozu.jpg' },
+            { category: '烟', name: '黑黄山带爆珠', desc: '', price: 25, img: 'https://github.com/qwerty458xjds/price/blob/main/heihuangsdaibaozu.jpg?raw=true' },
             { category: '烟', name: '金皖', desc: '', price: 27, img: '' },
             { category: '烟', name: '黄金叶', desc: '', price: 20, img: '' },
             { category: '烟', name: '细云烟', desc: '', price: 15, img: '' },
@@ -231,6 +231,9 @@
             { category: '烟', name: '红皖', desc: '', price: 19, img: '' },
             { category: '烟', name: '细黄金叶', desc: '', price: 18, img: '' },
             { category: '烟', name: '蓝利群', desc: '', price: 18, img: '' },
+            // 酒（示例，可按需修改）
+            { category: '酒', name: '青岛啤酒', desc: '330ml*6', price: 18, img: '' },
+            { category: '酒', name: '二锅头', desc: '500ml', price: 15, img: '' },
             // 零食
             { category: '零食', name: '大包薯片', desc: '原味 145g', price: 8, img: '' },
             { category: '零食', name: '辣条', desc: '小包', price: 2, img: '' },
@@ -269,7 +272,6 @@
             if (keyword.trim() !== '') {
                 const kw = keyword.trim().toLowerCase();
                 filtered = filtered.filter(p => {
-                    // 支持名称、描述、以及价格（精确数字）搜索
                     return p.name.toLowerCase().includes(kw) ||
                            p.desc.toLowerCase().includes(kw) ||
                            p.price.toString() === kw;
@@ -286,7 +288,7 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    ${p.img ? `<img src="${p.img}" alt="${p.name}" loading="lazy">` : '<div class="no-img">暂无图片</div>'}
+                    ${p.img ? `< img src="${p.img}" alt="${p.name}" loading="lazy" crossorigin="anonymous">` : '<div class="no-img">暂无图片</div>'}
                     <div class="product-name">${p.name}</div>
                     <div class="product-desc">${p.desc}</div>
                     <div class="product-price">${p.price}</div>
